@@ -1,0 +1,69 @@
+/* style.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+.body {
+    margin: 0;
+    padding: 0;
+    background-image: url('/static/img/1.jpg'); /* Ajusta la ruta de tu imagen de fondo */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.title-container {
+    background-color: #007bff;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    margin: 20px auto;
+    max-width: 800px; /* Ajusta el ancho máximo según tus preferencias */
+}
+
+.card {
+    margin-top: 20px;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.modal-content {
+    background-color: #f8f9fa;
+}
+
+.modal-footer {
+    justify-content: center;
+}
+
+.modal-title {
+    color: #007bff;
+}
+
+.modal-body {
+    margin-top: 20px;
+}
+
+.btn-close {
+    color: #007bff;
+}

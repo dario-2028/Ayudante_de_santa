@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1 class="text-center mt-5 mb-5 text-primary">Listado Clientes y vehiculos</h1>
+
+    <div class="container">
+        <div class="card shadow">
+            <div class="card-body">
+                <form action="/user" method="POST">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="nombreYapellido">Nombre usuario</label>
+                            <input type="text" class="form-control mb-3" name="nombreYapellido" id="nombreYapellido">
+                        </div>
+                        <div class="col">
+                            <label for="marcaVehiculo">Marca vehiculo</label>
+                            <input type="text" class="form-control mb-3" name="marcaVehiculo" id="marcaVehiculo">
+                        </div>
+                        <div class="col">
+                            <label for="patente">Patente</label>
+                            <input type="text" class="form-control mb-3" name="patente" id="patente">
+                        </div>
+                        <div class="col">
+                            <label for="fechaDeIngreso">Fecha de Ingreso</label>
+                            <input type="text" class="form-control mb-3" name="fechaDeIngreso" id="fechaDeIngreso">
+                        </div>
+                        <div class="col">
+                            <label for="fechaDeEgreso">Fecha de Egreso</label>
+                            <input type="text" class="form-control mb-3" name="fechaDeEgreso" id="fechaDeEgreso">
+                        </div>
+                        <div class="col">
+                            <label for="foto">Foto</label>
+                            <input type="text" class="form-control mb-3" name="foto" id="foto">
+                        </div>
+                        <div class="col">
+                            <label for="pago">Pago</label>
+                            <input type="text" class="form-control mb-3" name="pago" id="pago">
+                        </div>
+                        <div class="col">
+                            <label for="submit">Guardar</label>
+                            <button class="btn btn-primary mb-3 mt-4" type="submit" id="submit">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- tabla -->
+
+                <table class="table table-bordered">
+                    <thead>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre Y Apellido</th>
+                        <th scope="col">Marca Vehiculo</th>
+                        <th scope="col">Patente</th>
+                        <th scope="col">Fecha de Ingreso</th>
+                        <th scope="col">Fecha de Egreso</th>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Pago</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Eliminar</th>
+                    </thead>
+                    <tbody>
+                        {% for d in data %}
+                        <tr>
+                            <td>{{d.idEstacionamiento}}</td>
+                            <td>{{d['nombreYapellido']}}</td>
+                            <td>{{ d.marcaVehiculo }}</td>
+                            <td>{{d.patente}}</td>
+                            <td>{{d.fechaDeIngreso}}</td>
+                            <td>{{d.fechaDeEgreso}}</td>
+                            <td>{{d.foto}}</td>
+                            <td>{{d.pago}}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm" id="btn-edit{{d.idEstacionamiento}}" data-bs-toggle="modal"
+                                    data-bs-target="#modal{{d.idEstacionamiento}}">Editar</button>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('delete', idEstacionamiento=d.idEstacionamiento) }}" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+
+                        <!---modal--->
+                        <div class="modal fade" id="modal{{d.idEstacionamiento}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{d['nombreYapellido']}}</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/edit/{{d.idEstacionamiento}}" method="POST" id="editForm{{d.idEstacionamiento}}">
+                                            <input type="hidden" name="_method" value="PUT">
+                                            <label>NombreYapellido</label>
+                                            <input type="text" class="form-control mb-3" name="nombreYapellido"
+                                                value="{{d.nombreYapellido}}">
+                                            <label>MarcaVehiculo</label>
+                                            <input type="text" class="form-control mb-3" name="marcaVehiculo"
+                                                value="{{d.marcaVehiculo}}">
+                                            <label>Patente</label>
+                                            <input type="text" class="form-control mb-3" name="patente"
+                                                value="{{d.patente}}">
+                                            <label>Fecha de Ingreso</label>
+                                            <input type="text" class="form-control mb-3" name="fechaDeIngreso"
+                                                value="{{d.fechaDeIngreso}}">
+                                            <label>FechaDeEgreso</label>
+                                            <input type="text" class="form-control mb-3" name="fechaDeEgreso"
+                                                value="{{d.fechaDeEgreso}}">
+                                            <label>Foto</label>
+                                            <input type="text" class="form-control mb-3" name="foto"
+                                                value="{{d.foto}}">
+                                            <label>Pago</label>
+                                            <input type="text" class="form-control mb-3" name="pago"
+                                                value="{{d.pago}}">
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    
+
+<script src="/src/templates/sacript.js"></script>
+</body>
+
+</html>
+
+
+
